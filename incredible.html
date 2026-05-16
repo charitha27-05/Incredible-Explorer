@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Incredible Explorer</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-image: url('https://img.freepik.com/premium-photo/group-people-hiking-up-mountain-ideal-outdoor-adventure-concept_153912-157111.jpg');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .page {
+      display: none;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 700px;
+      text-align: center;
+    }
+    h1, h2 {
+      margin-bottom: 20px;
+    }
+    input, select, button {
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    img {
+      width: 300px;
+      border-radius: 10px;
+      margin-top: 10px;
+    }
+    a {
+      text-decoration: none;
+      background-color: blue;
+      color: white;
+      padding: 10px 20px;
+      display: inline-block;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    #ratingStars span {
+      font-size: 30px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Login Page -->
+  <div class="page" id="page0" style="display: block;">
+    <h1>Login</h1>
+    <input type="text" id="loginEmail" placeholder="Email"><br>
+    <input type="password" id="loginPass" placeholder="Password"><br>
+    <button onclick="login()">Login</button><br>
+    <a href="#" onclick="showPage(1)">Don't have an account? Sign Up</a>
+  </div>
+
+  <!-- Sign Up Page -->
+  <div class="page" id="page1">
+    <h1>Sign Up</h1>
+    <input type="text" id="signupEmail" placeholder="Email"><br>
+    <input type="password" id="signupPass" placeholder="Password"><br>
+    <button onclick="signUp()">Sign Up</button>
+  </div>
+
+  <!-- Page 2: Title -->
+  <div class="page" id="page2">
+    <h1>INCREDIBLE EXPLORER</h1>
+    <a href="#" onclick="showPage(3)">Start Your Journey</a>
+  </div>
+
+  <!-- Page 3: Select State and District -->
+  <div class="page" id="page3">
+    <h2>Select a State and District</h2>
+    <select id="stateSelect" onchange="loadDistricts()">
+      <option value="">-- Select State --</option>
+      <option value="tg">Telangana</option>
+      <option value="ap">Andhra Pradesh</option>
+    </select>
+    <select id="districtSelect">
+      <option value="">-- Select District --</option>
+    </select>
+    <br>
+    <button onclick="showPlaces()">Show Tourist Places</button>
+  </div>
+
+  <!-- Page 4: Show Places -->
+  <div class="page" id="page4">
+    <h2 id="placeTitle"></h2>
+    <div id="placesContainer"></div>
+    <a href="#" onclick="showPage(5)">Next</a>
+  </div>
+
+  <!-- Page 5: About -->
+  <div class="page" id="page5">
+    <h1>About This Project</h1>
+    <p>This website was created as a tourist guide to show famous places in states and districts.</p>
+    <h2>Team Members</h2>
+    <ul>
+      <li>ROSHANARA</li>
+      <li>GAYATHRI</li>
+      <li>KARISHMA</li>
+      <li>MANOGNA</li>
+      <li>CHARITHA</li>
+      <li>VASUNDHARA</li>
+    </ul>
+    <a href="#" onclick="showPage(6)">Next</a>
+  </div>
+
+  <!-- Page 6: Thank You -->
+  <div class="page" id="page6">
+    <h1>Thank You!</h1>
+    <p>We hope you enjoyed your virtual tour.</p>
+    <p>Contact us: tourist@explorer.com</p>
+    <a href="#" onclick="showPage(7)">Rate Us</a>
+  </div>
+
+  <!-- Page 7: Rating -->
+  <div class="page" id="page7">
+    <h1>Rate Your Experience</h1>
+    <p>How was your tour?</p>
+    <div id="ratingStars">
+      <span onclick="rate(1)">★</span>
+      <span onclick="rate(2)">★</span>
+      <span onclick="rate(3)">★</span>
+      <span onclick="rate(4)">★</span>
+      <span onclick="rate(5)">★</span>
+    </div>
+    <p id="ratingMsg"></p>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    const data = {
+      tg: {
+        "Jubilee Hills": [
+          { name: "KBR Park", image: "https://things2.do/blogs/wp-content/uploads/2022/12/garden-in-hyderabad.jpg", desc: "Beautiful nature park in the city." },
+          { name: "Peddamma Temple", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyJ3BpeO9R0bo70vM4MWsr1fuopicVf_fzOg&s", desc: "Popular temple in Hyderabad." }
+        ],
+        "Banjara Hills": [
+          { name: "City Center Mall", image: "https://i.ytimg.com/vi/tIMIH_Yq8Z8/mqdefault.jpg", desc: "Shopping destination." },
+          { name: "GVK One", image: "https://content.jdmagicbox.com/v2/comp/hyderabad/x8/040p1217488671z3k7x8/catalogue/gvk-one-mall-banjara-hills-hyderabad-malls-h8ztku3s3h.jpg", desc: "Modern mall with food and fun." }
+        ]
+      },
+      ap: {
+        "Vizag": [
+          { name: "RK Beach", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR40NxFXFe8LCZUS8Nsv7IIoFA_egUVYxt0_g&s", desc: "Beautiful beach." },
+          { name: "Kailasagiri", image: "https://media.tacdn.com/media/attractions-splice-spp-674x446/13/c4/1d/62.jpg", desc: "Hill park with views." }
+        ],
+        "Tirupati": [
+          { name: "Tirumala Temple", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2NrqMbxCpsfHkQqjLrfDjH2P4ybxec_N_hw&s", desc: "Famous pilgrimage site." },
+          { name: "Zoo Park", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUvtDAFQeVEyMf-hsYqXySjBavGOYpKO3_8g&s", desc: "Large zoo and nature park." }
+        ]
+      }
+    };
+
+    function showPage(pageNum) {
+      document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+      document.getElementById('page' + pageNum).style.display = 'block';
+    }
+
+    function loadDistricts() {
+      const state = document.getElementById('stateSelect').value;
+      const districtSelect = document.getElementById('districtSelect');
+      districtSelect.innerHTML = '<option value="">-- Select District --</option>';
+      if (state && data[state]) {
+        for (let district in data[state]) {
+          let option = document.createElement('option');
+          option.value = district;
+          option.textContent = district;
+          districtSelect.appendChild(option);
+        }
+      }
+    }
+
+    function showPlaces() {
+      const state = document.getElementById('stateSelect').value;
+      const district = document.getElementById('districtSelect').value;
+      const container = document.getElementById('placesContainer');
+      const title = document.getElementById('placeTitle');
+      if (!state || !district) return;
+      const places = data[state][district];
+      container.innerHTML = '';
+      title.textContent = "Famous Places in " + district;
+      places.forEach(place => {
+        container.innerHTML += `
+          <div>
+            <h3>${place.name}</h3>
+            <img src="${place.image}" alt="${place.name}">
+            <p>${place.desc}</p>
+          </div>`;
+      });
+      showPage(4);
+    }
+
+    function signUp() {
+      let email = document.getElementById('signupEmail').value;
+      let pass = document.getElementById('signupPass').value;
+      if (email && pass) {
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userPass', pass);
+        alert('Sign up successful! Please login.');
+        showPage(0);
+      } else {
+        alert('Please fill all fields');
+      }
+    }
+
+    function login() {
+      let email = document.getElementById('loginEmail').value;
+      let pass = document.getElementById('loginPass').value;
+      if (email === localStorage.getItem('userEmail') && pass === localStorage.getItem('userPass')) {
+        alert('Login successful!');
+        showPage(2);
+      } else {
+        alert('Invalid credentials');
+      }
+    }
+
+    function rate(stars) {
+      document.getElementById('ratingMsg').textContent = "You rated " + stars + " star" + (stars > 1 ? "s" : "") + "!";
+    }
+
+    // Optional: Clear stored credentials for testing
+    // localStorage.clear();
+  </script>
+
+</body>
+</html>
