@@ -1,0 +1,60 @@
+{
+  "tg": {
+    "name": "Telangana",
+    "districts": {
+      "Jubilee Hills": [
+        {
+          "name": "KBR Park",
+          "image": "https://things2.do/blogs/wp-content/uploads/2022/12/garden-in-hyderabad.jpg",
+          "desc": "Beautiful nature park in the heart of Hyderabad, perfect for morning walks and bird watching."
+        },
+        {
+          "name": "Peddamma Temple",
+          "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyJ3BpeO9R0bo70vM4MWsr1fuopicVf_fzOg&s",
+          "desc": "Famous ancient Hindu temple in Jubilee Hills dedicated to Goddess Peddamma."
+        }
+      ],
+      "Banjara Hills": [
+        {
+          "name": "City Center Mall",
+          "image": "https://i.ytimg.com/vi/tIMIH_Yq8Z8/mqdefault.jpg",
+          "desc": "Premier multi-level shopping, dining, and leisure destination in Hyderabad."
+        },
+        {
+          "name": "GVK One",
+          "image": "https://content.jdmagicbox.com/v2/comp/hyderabad/x8/040p1217488671z3k7x8/catalogue/gvk-one-mall-banjara-hills-hyderabad-malls-h8ztku3s3h.jpg",
+          "desc": "Modern luxury shopping mall with cinema, food court, and branded retail outlets."
+        }
+      ]
+    }
+  },
+  "ap": {
+    "name": "Andhra Pradesh",
+    "districts": {
+      "Vizag": [
+        {
+          "name": "RK Beach",
+          "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR40NxFXFe8LCZUS8Nsv7IIoFA_egUVYxt0_g&s",
+          "desc": "Scenic beach along the Bay of Bengal known for INS Kursura submarine museum and relaxing breezes."
+        },
+        {
+          "name": "Kailasagiri",
+          "image": "https://media.tacdn.com/media/attractions-splice-spp-674x446/13/c4/1d/62.jpg",
+          "desc": "Hilltop park offering panoramic views of the ocean, coastline, and the city of Visakhapatnam."
+        }
+      ],
+      "Tirupati": [
+        {
+          "name": "Tirumala Temple",
+          "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2NrqMbxCpsfHkQqjLrfDjH2P4ybxec_N_hw&s",
+          "desc": "World-renowned holy pilgrimage shrine dedicated to Lord Sri Venkateswara atop the Seven Hills."
+        },
+        {
+          "name": "Zoo Park",
+          "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUvtDAFQeVEyMf-hsYqXySjBavGOYpKO3_8g&s",
+          "desc": "Sri Venkateswara Zoological Park, one of the largest zoos in Asia featuring native wildlife."
+        }
+      ]
+    }
+  }
+}

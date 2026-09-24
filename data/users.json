@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "email": "demo@explorer.com",
+    "password": "password123",
+    "createdAt": "2026-09-24T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "email": "testuser@explorer.com",
+    "password": "securepass123",
+    "createdAt": "2026-09-24T05:37:10.828Z"
+  }
+]

@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "userEmail": "demo@explorer.com",
+    "stars": 5,
+    "comment": "Amazing virtual tour guide!",
+    "createdAt": "2026-09-24T10:00:00.000Z"
+  },
+  {
+    "id": 2,
+    "userEmail": "testuser@explorer.com",
+    "stars": 5,
+    "comment": "Loved KBR Park and Kailasagiri!",
+    "createdAt": "2026-09-24T05:39:56.874Z"
+  }
+]

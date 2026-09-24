@@ -1,242 +1,700 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Incredible Explorer</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background-image: url('https://img.freepik.com/premium-photo/group-people-hiking-up-mountain-ideal-outdoor-adventure-concept_153912-157111.jpg');
-      background-size: cover;
-      background-position: center;
-      color: white;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .page {
-      display: none;
-      background-color: rgba(0, 0, 0, 0.7);
-      padding: 30px;
-      border-radius: 10px;
-      width: 90%;
-      max-width: 700px;
-      text-align: center;
-    }
-    h1, h2 {
-      margin-bottom: 20px;
-    }
-    input, select, button {
-      padding: 10px;
-      margin: 10px 0;
-      font-size: 16px;
-      border-radius: 5px;
-    }
-    img {
-      width: 300px;
-      border-radius: 10px;
-      margin-top: 10px;
-    }
-    a {
-      text-decoration: none;
-      background-color: blue;
-      color: white;
-      padding: 10px 20px;
-      display: inline-block;
-      border-radius: 5px;
-      margin-top: 20px;
-    }
-    ul {
-      list-style: none;
-      padding: 0;
-    }
-    #ratingStars span {
-      font-size: 30px;
-      cursor: pointer;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Incredible Explorer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+                  url('https://img.freepik.com/premium-photo/group-people-hiking-up-mountain-ideal-outdoor-adventure-concept_153912-157111.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    /* Backend Status Badge */
+    #backendStatus {
+      position: fixed;
+      top: 15px;
+      right: 15px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: bold;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #ffcc00;
+      box-shadow: 0 0 8px currentColor;
+    }
+    .status-online { background: #00e676; }
+    .status-offline { background: #ff5252; }
+
+    .page {
+      display: none;
+      background-color: rgba(18, 22, 33, 0.85);
+      backdrop-filter: blur(10px);
+      padding: 35px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 680px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    h1, h2 {
+      margin-top: 0;
+      margin-bottom: 20px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    input, select, button {
+      padding: 12px 16px;
+      margin: 10px 0;
+      font-size: 15px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      width: 100%;
+      max-width: 380px;
+      box-sizing: border-box;
+      outline: none;
+      transition: all 0.2s ease;
+    }
+
+    input {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+    input::placeholder {
+      color: #bbb;
+    }
+    input:focus, select:focus {
+      border-color: #3b82f6;
+      background: rgba(255, 255, 255, 0.15);
+      box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+    }
+
+    select {
+      background: #1e293b;
+      color: white;
+      cursor: pointer;
+    }
+
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+    }
+    button:hover {
+      background: #1d4ed8;
+      transform: translateY(-1px);
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    a.btn-link, a {
+      text-decoration: none;
+      background-color: #2563eb;
+      color: white;
+      padding: 12px 24px;
+      display: inline-block;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-weight: 600;
+      transition: background 0.2s, transform 0.2s;
+    }
+    a.btn-link:hover, a:hover {
+      background-color: #1d4ed8;
+      transform: translateY(-1px);
+    }
+
+    .switch-link {
+      background: none !important;
+      color: #93c5fd !important;
+      padding: 0 !important;
+      font-size: 14px;
+      margin-top: 15px;
+      text-decoration: underline;
+    }
+    .switch-link:hover {
+      color: #bfdbfe !important;
+      transform: none !important;
+    }
+
+    .places-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+      max-height: 480px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+
+    .place-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 15px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      text-align: left;
+    }
+    .place-card h3 {
+      margin: 0 0 10px 0;
+      font-size: 18px;
+      color: #60a5fa;
+    }
+    .place-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-top: 0;
+    }
+    .place-card p {
+      font-size: 14px;
+      line-height: 1.4;
+      color: #e2e8f0;
+      margin: 10px 0 0 0;
+    }
+
+    ul.team-list {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin: 20px 0;
+    }
+    ul.team-list li {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    #ratingStars span {
+      font-size: 38px;
+      cursor: pointer;
+      color: #64748b;
+      transition: color 0.2s, transform 0.2s;
+      display: inline-block;
+      user-select: none;
+    }
+    #ratingStars span.active {
+      color: #facc15;
+    }
+    #ratingStars span:hover {
+      transform: scale(1.2);
+    }
+
+    .alert-msg {
+      margin-top: 15px;
+      font-size: 14px;
+      min-height: 20px;
+    }
+    .alert-success { color: #4ade80; }
+    .alert-error { color: #f87171; }
+
+    .user-pill {
+      font-size: 13px;
+      background: rgba(59, 130, 246, 0.25);
+      border: 1px solid rgba(59, 130, 246, 0.5);
+      border-radius: 20px;
+      padding: 4px 12px;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Login Page -->
-  <div class="page" id="page0" style="display: block;">
-    <h1>Login</h1>
-    <input type="text" id="loginEmail" placeholder="Email"><br>
-    <input type="password" id="loginPass" placeholder="Password"><br>
-    <button onclick="login()">Login</button><br>
-    <a href="#" onclick="showPage(1)">Don't have an account? Sign Up</a>
-  </div>
+  <!-- Live Backend Indicator -->
+  <div id="backendStatus">
+    <span class="status-dot" id="backendDot"></span>
+    <span id="backendText">Connecting to backend...</span>
+  </div>
 
-  <!-- Sign Up Page -->
-  <div class="page" id="page1">
-    <h1>Sign Up</h1>
-    <input type="text" id="signupEmail" placeholder="Email"><br>
-    <input type="password" id="signupPass" placeholder="Password"><br>
-    <button onclick="signUp()">Sign Up</button>
-  </div>
+  <!-- Page 0: Login -->
+  <div class="page" id="page0" style="display: block;">
+    <h1>Login</h1>
+    <p style="color:#cbd5e1; font-size:14px; margin-top:-10px;">Welcome back to Incredible Explorer</p>
+    <form onsubmit="login(event)">
+      <input type="email" id="loginEmail" placeholder="Email Address" required><br>
+      <input type="password" id="loginPass" placeholder="Password" required><br>
+      <button type="submit" id="loginBtn">Login</button>
+    </form>
+    <div id="loginMsg" class="alert-msg"></div>
+    <a href="#" class="switch-link" onclick="showPage(1); return false;">Don't have an account? Sign Up</a>
+  </div>
 
-  <!-- Page 2: Title -->
-  <div class="page" id="page2">
-    <h1>INCREDIBLE EXPLORER</h1>
-    <a href="#" onclick="showPage(3)">Start Your Journey</a>
-  </div>
+  <!-- Page 1: Sign Up -->
+  <div class="page" id="page1">
+    <h1>Sign Up</h1>
+    <p style="color:#cbd5e1; font-size:14px; margin-top:-10px;">Create an account to explore incredible places</p>
+    <form onsubmit="signUp(event)">
+      <input type="email" id="signupEmail" placeholder="Email Address" required><br>
+      <input type="password" id="signupPass" placeholder="Create Password" required minlength="4"><br>
+      <button type="submit" id="signupBtn">Sign Up</button>
+    </form>
+    <div id="signupMsg" class="alert-msg"></div>
+    <a href="#" class="switch-link" onclick="showPage(0); return false;">Already have an account? Login</a>
+  </div>
 
-  <!-- Page 3: Select State and District -->
-  <div class="page" id="page3">
-    <h2>Select a State and District</h2>
-    <select id="stateSelect" onchange="loadDistricts()">
-      <option value="">-- Select State --</option>
-      <option value="tg">Telangana</option>
-      <option value="ap">Andhra Pradesh</option>
-    </select>
-    <select id="districtSelect">
-      <option value="">-- Select District --</option>
-    </select>
-    <br>
-    <button onclick="showPlaces()">Show Tourist Places</button>
-  </div>
+  <!-- Page 2: Title / Welcome -->
+  <div class="page" id="page2">
+    <div id="loggedInUserBadge" class="user-pill" style="display:none;"></div>
+    <h1>INCREDIBLE EXPLORER</h1>
+    <p style="font-size: 16px; color: #e2e8f0; line-height: 1.6;">
+      Discover breathtaking landmarks, cultural heritage, and premier attractions across India's vibrant states and districts.
+    </p>
+    <a href="#" class="btn-link" onclick="showPage(3); return false;">Start Your Journey</a>
+    <br>
+    <a href="#" class="switch-link" onclick="logout(); return false;" style="margin-top:25px; display:inline-block;">Sign Out</a>
+  </div>
 
-  <!-- Page 4: Show Places -->
-  <div class="page" id="page4">
-    <h2 id="placeTitle"></h2>
-    <div id="placesContainer"></div>
-    <a href="#" onclick="showPage(5)">Next</a>
-  </div>
+  <!-- Page 3: Select State and District -->
+  <div class="page" id="page3">
+    <h2>Select a State and District</h2>
+    <p style="color:#cbd5e1; font-size:14px; margin-top:-10px;">Choose a destination to view top tourist spots</p>
+    <select id="stateSelect" onchange="loadDistricts()">
+      <option value="">-- Select State --</option>
+    </select>
+    <select id="districtSelect">
+      <option value="">-- Select District --</option>
+    </select>
+    <br>
+    <button onclick="showPlaces()">Show Tourist Places</button>
+    <div id="selectionMsg" class="alert-msg"></div>
+  </div>
 
-  <!-- Page 5: About -->
-  <div class="page" id="page5">
-    <h1>About This Project</h1>
-    <p>This website was created as a tourist guide to show famous places in states and districts.</p>
-    <h2>Team Members</h2>
-    <ul>
-      <li>ROSHANARA</li>
-      <li>GAYATHRI</li>
-      <li>KARISHMA</li>
-      <li>MANOGNA</li>
-      <li>CHARITHA</li>
-      <li>VASUNDHARA</li>
-    </ul>
-    <a href="#" onclick="showPage(6)">Next</a>
-  </div>
+  <!-- Page 4: Show Places -->
+  <div class="page" id="page4">
+    <h2 id="placeTitle">Famous Places</h2>
+    <div id="placesContainer" class="places-grid"></div>
+    <div style="margin-top: 25px; display: flex; justify-content: center; gap: 15px;">
+      <a href="#" class="btn-link" onclick="showPage(3); return false;" style="background:#475569;">Back</a>
+      <a href="#" class="btn-link" onclick="showPage(5); return false;">Next</a>
+    </div>
+  </div>
 
-  <!-- Page 6: Thank You -->
-  <div class="page" id="page6">
-    <h1>Thank You!</h1>
-    <p>We hope you enjoyed your virtual tour.</p>
-    <p>Contact us: tourist@explorer.com</p>
-    <a href="#" onclick="showPage(7)">Rate Us</a>
-  </div>
+  <!-- Page 5: About -->
+  <div class="page" id="page5">
+    <h1>About This Project</h1>
+    <p>This web application is designed as an interactive tourist guide to showcase famous destinations across states and districts with fullstack connectivity.</p>
+    <h2>Team Members</h2>
+    <ul class="team-list">
+      <li>ROSHANARA</li>
+      <li>GAYATHRI</li>
+      <li>KARISHMA</li>
+      <li>MANOGNA</li>
+      <li>CHARITHA</li>
+      <li>VASUNDHARA</li>
+    </ul>
+    <div style="margin-top: 25px; display: flex; justify-content: center; gap: 15px;">
+      <a href="#" class="btn-link" onclick="showPage(4); return false;" style="background:#475569;">Back</a>
+      <a href="#" class="btn-link" onclick="showPage(6); return false;">Next</a>
+    </div>
+  </div>
 
-  <!-- Page 7: Rating -->
-  <div class="page" id="page7">
-    <h1>Rate Your Experience</h1>
-    <p>How was your tour?</p>
-    <div id="ratingStars">
-      <span onclick="rate(1)">★</span>
-      <span onclick="rate(2)">★</span>
-      <span onclick="rate(3)">★</span>
-      <span onclick="rate(4)">★</span>
-      <span onclick="rate(5)">★</span>
-    </div>
-    <p id="ratingMsg"></p>
-  </div>
+  <!-- Page 6: Thank You -->
+  <div class="page" id="page6">
+    <h1>Thank You!</h1>
+    <p>We hope you enjoyed exploring with Incredible Explorer.</p>
+    <p style="color:#93c5fd; font-weight:500;">Contact us: tourist@explorer.com</p>
+    <a href="#" class="btn-link" onclick="showPage(7); return false;">Rate Us</a>
+  </div>
 
-  <!-- JavaScript -->
-  <script>
-    const data = {
-      tg: {
-        "Jubilee Hills": [
-          { name: "KBR Park", image: "https://things2.do/blogs/wp-content/uploads/2022/12/garden-in-hyderabad.jpg", desc: "Beautiful nature park in the city." },
-          { name: "Peddamma Temple", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyJ3BpeO9R0bo70vM4MWsr1fuopicVf_fzOg&s", desc: "Popular temple in Hyderabad." }
-        ],
-        "Banjara Hills": [
-          { name: "City Center Mall", image: "https://i.ytimg.com/vi/tIMIH_Yq8Z8/mqdefault.jpg", desc: "Shopping destination." },
-          { name: "GVK One", image: "https://content.jdmagicbox.com/v2/comp/hyderabad/x8/040p1217488671z3k7x8/catalogue/gvk-one-mall-banjara-hills-hyderabad-malls-h8ztku3s3h.jpg", desc: "Modern mall with food and fun." }
-        ]
-      },
-      ap: {
-        "Vizag": [
-          { name: "RK Beach", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR40NxFXFe8LCZUS8Nsv7IIoFA_egUVYxt0_g&s", desc: "Beautiful beach." },
-          { name: "Kailasagiri", image: "https://media.tacdn.com/media/attractions-splice-spp-674x446/13/c4/1d/62.jpg", desc: "Hill park with views." }
-        ],
-        "Tirupati": [
-          { name: "Tirumala Temple", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2NrqMbxCpsfHkQqjLrfDjH2P4ybxec_N_hw&s", desc: "Famous pilgrimage site." },
-          { name: "Zoo Park", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUvtDAFQeVEyMf-hsYqXySjBavGOYpKO3_8g&s", desc: "Large zoo and nature park." }
-        ]
-      }
-    };
+  <!-- Page 7: Rating -->
+  <div class="page" id="page7">
+    <h1>Rate Your Experience</h1>
+    <p>How was your virtual tour?</p>
+    <div id="ratingStars">
+      <span onclick="rate(1)" data-val="1">★</span>
+      <span onclick="rate(2)" data-val="2">★</span>
+      <span onclick="rate(3)" data-val="3">★</span>
+      <span onclick="rate(4)" data-val="4">★</span>
+      <span onclick="rate(5)" data-val="5">★</span>
+    </div>
+    <textarea id="ratingComment" placeholder="Optional comments or feedback..." style="display:none; width:100%; max-width:380px; padding:10px; margin-top:15px; border-radius:8px; background:rgba(255,255,255,0.1); color:white; border:1px solid rgba(255,255,255,0.2); font-family:inherit;"></textarea>
+    <p id="ratingMsg" class="alert-msg"></p>
+    <div id="backendStatsMsg" style="font-size:13px; color:#cbd5e1; margin-top:8px;"></div>
+    <a href="#" class="btn-link" onclick="showPage(2); return false;" style="margin-top:15px;">Return to Home</a>
+  </div>
 
-    function showPage(pageNum) {
-      document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-      document.getElementById('page' + pageNum).style.display = 'block';
-    }
+  <!-- JavaScript -->
+  <script>
+    // Fallback data in case backend is offline
+    const localData = {
+      tg: {
+        name: "Telangana",
+        districts: {
+          "Jubilee Hills": [
+            { name: "KBR Park", image: "https://things2.do/blogs/wp-content/uploads/2022/12/garden-in-hyderabad.jpg", desc: "Beautiful nature park in the city." },
+            { name: "Peddamma Temple", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyJ3BpeO9R0bo70vM4MWsr1fuopicVf_fzOg&s", desc: "Popular temple in Hyderabad." }
+          ],
+          "Banjara Hills": [
+            { name: "City Center Mall", image: "https://i.ytimg.com/vi/tIMIH_Yq8Z8/mqdefault.jpg", desc: "Shopping destination." },
+            { name: "GVK One", image: "https://content.jdmagicbox.com/v2/comp/hyderabad/x8/040p1217488671z3k7x8/catalogue/gvk-one-mall-banjara-hills-hyderabad-malls-h8ztku3s3h.jpg", desc: "Modern mall with food and fun." }
+          ]
+        }
+      },
+      ap: {
+        name: "Andhra Pradesh",
+        districts: {
+          "Vizag": [
+            { name: "RK Beach", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR40NxFXFe8LCZUS8Nsv7IIoFA_egUVYxt0_g&s", desc: "Beautiful beach." },
+            { name: "Kailasagiri", image: "https://media.tacdn.com/media/attractions-splice-spp-674x446/13/c4/1d/62.jpg", desc: "Hill park with views." }
+          ],
+          "Tirupati": [
+            { name: "Tirumala Temple", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2NrqMbxCpsfHkQqjLrfDjH2P4ybxec_N_hw&s", desc: "Famous pilgrimage site." },
+            { name: "Zoo Park", image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUvtDAFQeVEyMf-hsYqXySjBavGOYpKO3_8g&s", desc: "Large zoo and nature park." }
+          ]
+        }
+      }
+    };
 
-    function loadDistricts() {
-      const state = document.getElementById('stateSelect').value;
-      const districtSelect = document.getElementById('districtSelect');
-      districtSelect.innerHTML = '<option value="">-- Select District --</option>';
-      if (state && data[state]) {
-        for (let district in data[state]) {
-          let option = document.createElement('option');
-          option.value = district;
-          option.textContent = district;
-          districtSelect.appendChild(option);
-        }
-      }
-    }
+    let cachedPlaces = null;
+    let currentUser = localStorage.getItem('currentUser') || null;
 
-    function showPlaces() {
-      const state = document.getElementById('stateSelect').value;
-      const district = document.getElementById('districtSelect').value;
-      const container = document.getElementById('placesContainer');
-      const title = document.getElementById('placeTitle');
-      if (!state || !district) return;
-      const places = data[state][district];
-      container.innerHTML = '';
-      title.textContent = "Famous Places in " + district;
-      places.forEach(place => {
-        container.innerHTML += `
-          <div>
-            <h3>${place.name}</h3>
-            <img src="${place.image}" alt="${place.name}">
-            <p>${place.desc}</p>
-          </div>`;
-      });
-      showPage(4);
-    }
+    // Detect API Base URL (works seamlessly when hosted together or separately)
+    const API_BASE = window.location.origin;
 
-    function signUp() {
-      let email = document.getElementById('signupEmail').value;
-      let pass = document.getElementById('signupPass').value;
-      if (email && pass) {
-        localStorage.setItem('userEmail', email);
-        localStorage.setItem('userPass', pass);
-        alert('Sign up successful! Please login.');
-        showPage(0);
-      } else {
-        alert('Please fill all fields');
-      }
-    }
+    // Page navigation
+    function showPage(pageNum) {
+      document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+      const target = document.getElementById('page' + pageNum);
+      if (target) {
+        target.style.display = 'block';
+      }
+      if (pageNum === 2 && currentUser) {
+        const badge = document.getElementById('loggedInUserBadge');
+        badge.textContent = `Logged in as: ${currentUser}`;
+        badge.style.display = 'inline-block';
+      }
+    }
 
-    function login() {
-      let email = document.getElementById('loginEmail').value;
-      let pass = document.getElementById('loginPass').value;
-      if (email === localStorage.getItem('userEmail') && pass === localStorage.getItem('userPass')) {
-        alert('Login successful!');
-        showPage(2);
-      } else {
-        alert('Invalid credentials');
-      }
-    }
+    // Health check on load
+    async function checkBackendHealth() {
+      const dot = document.getElementById('backendDot');
+      const text = document.getElementById('backendText');
+      try {
+        const res = await fetch(`${API_BASE}/api/health`);
+        if (res.ok) {
+          const json = await res.json();
+          dot.className = 'status-dot status-online';
+          text.textContent = 'Backend: Online';
+          return true;
+        }
+      } catch (err) {
+        // Offline or running as static file directly
+      }
+      dot.className = 'status-dot status-offline';
+      text.textContent = 'Backend: Offline (Client Mode)';
+      return false;
+    }
 
-    function rate(stars) {
-      document.getElementById('ratingMsg').textContent = "You rated " + stars + " star" + (stars > 1 ? "s" : "") + "!";
-    }
+    // Load Places from Backend API
+    async function fetchPlacesData() {
+      try {
+        const res = await fetch(`${API_BASE}/api/places`);
+        if (res.ok) {
+          const json = await res.json();
+          if (json.data) {
+            cachedPlaces = json.data;
+            populateStateSelect();
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Could not fetch from backend, using fallback data:', e);
+      }
+      cachedPlaces = localData;
+      populateStateSelect();
+    }
 
-    // Optional: Clear stored credentials for testing
-    // localStorage.clear();
-  </script>
+    function populateStateSelect() {
+      const stateSelect = document.getElementById('stateSelect');
+      stateSelect.innerHTML = '<option value="">-- Select State --</option>';
+      for (let stateKey in cachedPlaces) {
+        const stateObj = cachedPlaces[stateKey];
+        const option = document.createElement('option');
+        option.value = stateKey;
+        option.textContent = stateObj.name || (stateKey === 'tg' ? 'Telangana' : 'Andhra Pradesh');
+        stateSelect.appendChild(option);
+      }
+    }
 
+    function loadDistricts() {
+      const state = document.getElementById('stateSelect').value;
+      const districtSelect = document.getElementById('districtSelect');
+      districtSelect.innerHTML = '<option value="">-- Select District --</option>';
+
+      if (state && cachedPlaces && cachedPlaces[state]) {
+        const stateInfo = cachedPlaces[state];
+        const districts = stateInfo.districts || stateInfo;
+        for (let district in districts) {
+          let option = document.createElement('option');
+          option.value = district;
+          option.textContent = district;
+          districtSelect.appendChild(option);
+        }
+      }
+    }
+
+    function showPlaces() {
+      const state = document.getElementById('stateSelect').value;
+      const district = document.getElementById('districtSelect').value;
+      const container = document.getElementById('placesContainer');
+      const title = document.getElementById('placeTitle');
+      const msg = document.getElementById('selectionMsg');
+
+      if (!state || !district) {
+        msg.textContent = 'Please select both state and district.';
+        msg.className = 'alert-msg alert-error';
+        return;
+      }
+      msg.textContent = '';
+
+      const stateInfo = cachedPlaces[state];
+      const districts = stateInfo.districts || stateInfo;
+      const places = districts[district] || [];
+
+      container.innerHTML = '';
+      title.textContent = "Famous Places in " + district;
+
+      if (places.length === 0) {
+        container.innerHTML = '<p>No places recorded for this district yet.</p>';
+      } else {
+        places.forEach(place => {
+          const card = document.createElement('div');
+          card.className = 'place-card';
+          card.innerHTML = `
+            <h3>${place.name}</h3>
+            <img src="${place.image}" alt="${place.name}" loading="lazy">
+            <p>${place.desc}</p>
+          `;
+          container.appendChild(card);
+        });
+      }
+      showPage(4);
+    }
+
+    // Backend Sign Up
+    async function signUp(e) {
+      if (e) e.preventDefault();
+      const email = document.getElementById('signupEmail').value.trim();
+      const pass = document.getElementById('signupPass').value.trim();
+      const msg = document.getElementById('signupMsg');
+      const btn = document.getElementById('signupBtn');
+
+      if (!email || !pass) {
+        msg.textContent = 'Please fill all fields.';
+        msg.className = 'alert-msg alert-error';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Signing up...';
+
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/signup`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, password: pass })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          msg.textContent = data.message || 'Sign up successful! Redirecting to login...';
+          msg.className = 'alert-msg alert-success';
+          setTimeout(() => {
+            document.getElementById('loginEmail').value = email;
+            document.getElementById('signupEmail').value = '';
+            document.getElementById('signupPass').value = '';
+            msg.textContent = '';
+            showPage(0);
+          }, 1200);
+        } else {
+          msg.textContent = data.message || 'Sign up failed.';
+          msg.className = 'alert-msg alert-error';
+        }
+      } catch (err) {
+        // Offline fallback
+        localStorage.setItem('userEmail', email);
+        localStorage.setItem('userPass', pass);
+        msg.textContent = 'Backend offline: Saved locally! Redirecting to login...';
+        msg.className = 'alert-msg alert-success';
+        setTimeout(() => {
+          showPage(0);
+          msg.textContent = '';
+        }, 1200);
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Sign Up';
+      }
+    }
+
+    // Backend Login
+    async function login(e) {
+      if (e) e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPass').value.trim();
+      const msg = document.getElementById('loginMsg');
+      const btn = document.getElementById('loginBtn');
+
+      if (!email || !pass) {
+        msg.textContent = 'Please fill all fields.';
+        msg.className = 'alert-msg alert-error';
+        return;
+      }
+
+      btn.disabled = true;
+      btn.textContent = 'Verifying...';
+
+      try {
+        const res = await fetch(`${API_BASE}/api/auth/login`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email: email, password: pass })
+        });
+        const data = await res.json();
+
+        if (res.ok && data.success) {
+          currentUser = email;
+          localStorage.setItem('currentUser', email);
+          msg.textContent = 'Login successful!';
+          msg.className = 'alert-msg alert-success';
+          setTimeout(() => {
+            msg.textContent = '';
+            showPage(2);
+          }, 800);
+        } else {
+          msg.textContent = data.message || 'Invalid credentials.';
+          msg.className = 'alert-msg alert-error';
+        }
+      } catch (err) {
+        // Offline fallback check
+        if (email === localStorage.getItem('userEmail') && pass === localStorage.getItem('userPass')) {
+          currentUser = email;
+          localStorage.setItem('currentUser', email);
+          msg.textContent = 'Login successful (Offline)!';
+          msg.className = 'alert-msg alert-success';
+          setTimeout(() => {
+            msg.textContent = '';
+            showPage(2);
+          }, 800);
+        } else {
+          msg.textContent = 'Invalid credentials.';
+          msg.className = 'alert-msg alert-error';
+        }
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Login';
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      localStorage.removeItem('currentUser');
+      document.getElementById('loginPass').value = '';
+      showPage(0);
+    }
+
+    // Backend Rating Submission
+    async function rate(stars) {
+      // Highlight stars
+      const starSpans = document.querySelectorAll('#ratingStars span');
+      starSpans.forEach((span, idx) => {
+        if (idx < stars) {
+          span.classList.add('active');
+        } else {
+          span.classList.remove('active');
+        }
+      });
+
+      const ratingMsg = document.getElementById('ratingMsg');
+      const statsMsg = document.getElementById('backendStatsMsg');
+      const comment = document.getElementById('ratingComment').value;
+      ratingMsg.textContent = `Submitting your ${stars} star rating to backend...`;
+      ratingMsg.className = 'alert-msg';
+
+      try {
+        const res = await fetch(`${API_BASE}/api/ratings`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userEmail: currentUser || 'Anonymous',
+            stars: stars,
+            comment: comment
+          })
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          ratingMsg.textContent = data.message;
+          ratingMsg.className = 'alert-msg alert-success';
+          if (data.stats) {
+            statsMsg.textContent = `Overall Rating: ⭐ ${data.stats.averageRating} / 5 (${data.stats.totalRatings} total reviews)`;
+          }
+          return;
+        }
+      } catch (e) {
+        // Fallback
+      }
+
+      ratingMsg.textContent = "You rated " + stars + " star" + (stars > 1 ? "s" : "") + "!";
+      ratingMsg.className = 'alert-msg alert-success';
+    }
+
+    // Initial setup on window load
+    window.addEventListener('DOMContentLoaded', () => {
+      checkBackendHealth();
+      fetchPlacesData();
+
+      // Check if user already logged in
+      if (currentUser) {
+        showPage(2);
+      } else {
+        showPage(0);
+      }
+    });
+  </script>
 </body>
 </html>
