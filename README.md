@@ -13,7 +13,7 @@
 
 ---
 
-## ✨ Features
+##  Features
 
 - **Interactive Destination Finder:** Select states (e.g., Telangana, Andhra Pradesh) and districts to discover top tourist destinations with photos and descriptions.
 - **Fullstack Node.js Backend:** Express.js server providing RESTful endpoints for places, authentication, and reviews.
